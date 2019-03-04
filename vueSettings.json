@@ -1,0 +1,30 @@
+{
+    "eslint.nodePath": "/home/eigen/.nvm/versions/node/v10.15.1/bin/node",
+    "workbench.colorTheme": "Monokai",
+    "editor.minimap.enabled": false,
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on",
+    "eslint.autoFixOnSave": true,
+    "files.watcherExclude": {
+        "**/build": true
+    },
+    "files.exclude": {
+        "**/.git": false
+    },
+    "terminal.integrated.cursorBlinking": true,
+    "eslint.validate": [
+        {
+            "language": "vue",
+            "autoFix": true
+        },
+        {
+            "language": "html",
+            "autoFix": true
+        },
+        {
+            "language": "javascript",
+            "autoFix": true
+        }
+    ],
+}
