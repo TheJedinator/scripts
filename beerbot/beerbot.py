@@ -84,11 +84,11 @@ def create_poll():
   #print(york_fred.prettify())
   test_list = []
 
-  for beer in york_fred.find_all('p'):
-    for bt in beer.find_all('strong'):
-      print(bt.get_text())
+  for bt in york_fred.find_all('strong'):
       x = bt.get_text().strip()
-      test_list.append(x)
+      if x != "":
+        # print(x)
+        test_list.append(x)
   polly_str = ""
   date = datetime.date.today().strftime('%B %d, %Y')
   if len(test_list) <= 0:
