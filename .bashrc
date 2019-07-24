@@ -1,3 +1,6 @@
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source /usr/local/bin/virtualenvwrapper.sh
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -127,4 +130,6 @@ parse_git_branch() {
 }
 
 export PS1="\[\033[38;5;1m\]\t\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;10m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;11m\]\h\[$(tput sgr0)\]\[\033[38;5;165m\] \W\[$(tput sgr0)\]\$(parse_git_branch)\\n\\$\[$(tput sgr0)\] "
+
+alias rm="rm -i"
 
