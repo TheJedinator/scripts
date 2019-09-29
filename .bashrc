@@ -1,9 +1,18 @@
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
-source /usr/local/bin/virtualenvwrapper.sh
+export PATH=/usr/local/Cellar/postgresql/11.5_1/bin/:$PATH
+export PATH=/usr/local/Cellar/openvpn/2.4.7_1/sbin/openvpn:$PATH
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+
+alias micro='~/micro'
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
+
+venvwrap="virtualenvwrapper.sh"
+/usr/bin/which -s $venvwrap
+if [ $? -eq 0 ]; then
+    venvwrap=`/usr/bin/which $venvwrap`
+    source $venvwrap
+fi
 
 # If not running interactively, don't do anything
 case $- in
@@ -119,12 +128,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-source /home/eigen/hotload.sh
-
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
@@ -133,3 +136,12 @@ export PS1="\[\033[38;5;1m\]\t\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]
 
 alias rm="rm -i"
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias psqlprod='psql -h localhost -p 54323 -U jed.palmater intellexon'
+alias psqlstage='PGPASSWORD=new.start psql -h staging-intellexon.crun5e5mmpwp.us-east-1.rds.amazonaws.com -U eigen intellexon'
+alias dbtunnel='bash ~/.ssh/RDB_TUNNEL.sh'
+alias runvpn='cd ~/Desktop/VPN && sudo openvpn --config client2.conf'
