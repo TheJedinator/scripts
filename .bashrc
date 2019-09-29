@@ -7,6 +7,10 @@ alias micro='~/micro'
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
 venvwrap="virtualenvwrapper.sh"
 /usr/bin/which -s $venvwrap
 if [ $? -eq 0 ]; then
