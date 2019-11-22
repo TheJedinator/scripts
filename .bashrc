@@ -146,6 +146,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias psqlprod='psql -h localhost -p 54323 -U jed.palmater intellexon'
-alias psqlstage='PGPASSWORD=new.start psql -h staging-intellexon.crun5e5mmpwp.us-east-1.rds.amazonaws.com -U eigen intellexon'
+alias psqlstage='psql -h staging-intellexon.crun5e5mmpwp.us-east-1.rds.amazonaws.com -U eigen intellexon'
 alias dbtunnel='bash ~/.ssh/RDB_TUNNEL.sh'
-alias runvpn='cd ~/Desktop/VPN && sudo openvpn --config client2.conf'
+alias stageCreds='aws secretsmanager get-secret-value --secret-id stage/intellexon/eigen_psql | jq ".SecretString | fromjson"'
+alias prodCreds='aws secretsmanager get-secret-value --secret-id rds/prod/jed.palmater | jq ".SecretString | fromjson"'

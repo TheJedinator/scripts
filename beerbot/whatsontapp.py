@@ -8,7 +8,7 @@ import json
 def main():
     req = requests.get('https://www.anbl.com/growlers')
     data = req.content
-    soup = BeautifulSoup(data, 'lxml')
+    soup = BeautifulSoup(data, 'html.parser')
     york_fred = soup.find(
         'div', attrs={'class': 'widget', 'data-type': 'view', 'data-index': '3'})
     # print(york_fred.prettify())
