@@ -1,5 +1,5 @@
 # Prune first 
-git prune && git remote prune origin && git remote prune upstream
+#git prune && git remote prune origin && git remote prune upstream
 
 # Clean up Branches that have been merged 
 git branch --merged | egrep -v "(^\*|master|dev|develop)" | xargs git branch -D
