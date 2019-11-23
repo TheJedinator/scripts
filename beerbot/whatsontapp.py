@@ -3,7 +3,10 @@ import datetime
 from bs4 import BeautifulSoup
 from pprint import pprint
 import json
+import os
 
+SECRET = os.environ["UNTAPD_SECRET"]
+ID = os.environ["UNTAPD_ID"]
 
 def main():
     req = requests.get('https://www.anbl.com/growlers')
@@ -30,7 +33,7 @@ def main():
     # If the request succeeds we add info & beer to the poll, otherwise we just add the beer to the poll
     for beer in test_list:
         print(beer)
-        api_str = """ https://api.untappd.com/v4/search/beer?q={}&client_id=FAC6C2CDD00FD0787888C1A4383832B52D20463F&client_secret=091BCEE693FF092F66CF5A6381077940E541CC82""".format(beer)
+        api_str = """ https://api.untappd.com/v4/search/beer?q={}&client_id={}&client_secret={}""".format(beer, ID, SECRET)
         res = requests.get(api_str)
         res = json.loads(res.content)
         beer_str = None
