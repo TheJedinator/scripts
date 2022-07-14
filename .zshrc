@@ -1,6 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-export PATH="${PATH}:${HOME}/.local/bin"
-eval "$(fig init zsh pre)"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -14,8 +13,8 @@ eval "$(fig init zsh pre)"
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/jedpalmater/.oh-my-zsh"
 
-# Set python to correct version (3.8)
-export PATH="/opt/homebrew/opt/python@3.8/bin:$PATH"
+# Set python to correct version (3.9)
+export PATH="/opt/homebrew/opt/python@3.9/bin:$PATH"
 export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 # Allow writing code <filename> in terminal
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
@@ -92,8 +91,8 @@ ZSH_THEME="dstufft"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	zsh-completions
-	zsh-syntax-highlighting
+	# zsh-completions
+	# zsh-syntax-highlighting
 	git
 	zsh-autosuggestions
 	brew
@@ -110,7 +109,7 @@ plugins=(
 	copyfile
 	jsontools
 )
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+# fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -134,6 +133,9 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
+
+alias python="python3"
+
 alias branchclean="bash ~/Desktop/scripts/branchClean.sh"
 alias dockerup="docker compose -f '/Users/jedpalmater/Desktop/scripts/docker-compose.yaml' up -d"
 alias dockerdown="docker compose -f '/Users/jedpalmater/Desktop/scripts/docker-compose.yaml' down"
@@ -151,14 +153,16 @@ alias dockerps='docker ps -a --format "table {{ .ID }}\t{{.Image}}\t{{ .Status }
 alias dockerstop='docker stop $(docker ps -a -q)'
 #Remove containers
 alias dockerrm='docker rm $(docker ps -a -q)'
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+alias weather="curl wttr.in/Fredericton\?m"
+alias editcompose="code /Users/jedpalmater/Desktop/scripts/docker-compose.yaml"
+alias ecrlogin="aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 310087275154.dkr.ecr.us-east-1.amazonaws.com/node-12-alpine:latest"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 eval source <(/opt/homebrew/bin/starship init zsh --print-full-init)
 eval $(thefuck --alias)
-# Fig post block. Keep at the bottom of this file.
-eval "$(fig init zsh post)"
 
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
