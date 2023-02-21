@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -11,11 +11,11 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/jedpalmater/.oh-my-zsh"
-
+export ZSH="/Users/jedp/.oh-my-zsh"
+export GPG_TTY=$(tty)
 # Set python to correct version (3.9)
-export PATH="/opt/homebrew/opt/python@3.9/bin:$PATH"
 export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export bastionHostId="i-026b8391c4f370b87"
 # Allow writing code <filename> in terminal
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 # Add psql to path
@@ -23,6 +23,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# PYTHON PYENV
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -97,6 +103,7 @@ plugins=(
 	zsh-autosuggestions
 	brew
 	python
+	pyenv
 	docker
 	docker-compose
 	node
@@ -108,6 +115,7 @@ plugins=(
 	copypath
 	copyfile
 	jsontools
+	gpg-agent
 )
 # fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
@@ -137,32 +145,44 @@ source $ZSH/oh-my-zsh.sh
 alias python="python3"
 
 alias branchclean="bash ~/Desktop/scripts/branchClean.sh"
-alias dockerup="docker compose -f '/Users/jedpalmater/Desktop/scripts/docker-compose.yaml' up -d"
-alias dockerdown="docker compose -f '/Users/jedpalmater/Desktop/scripts/docker-compose.yaml' down"
-
-
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 alias zshconfig="code ~/.zshrc"
 alias srczsh="source ~/.zshrc"
+
+### GIT
+ alias gresetm='g reset --soft $(git merge-base master HEAD)'
+
+### DOCKER
 # Docker ls
 alias dockerls='docker ps -a'
 alias dockerps='docker ps -a --format "table {{ .ID }}\t{{.Image}}\t{{ .Status }}\t{{ .Ports }}"'
-
 # Stop Containers
 alias dockerstop='docker stop $(docker ps -a -q)'
 #Remove containers
 alias dockerrm='docker rm $(docker ps -a -q)'
+
+### FLOAT STUFF
+alias rpayments='bash ~/Desktop/scripts/Float/payments.sh'
+alias rcore='bash ~/Desktop/scripts/Float/core.sh'
+alias sshcore="/Users/jedp/Desktop/scripts/Float/ssh_float.sh -h $bastionHostId -s core"
+alias sshpayments="/Users/jedp/Desktop/scripts/Float/ssh_float.sh -h $bastionHostId -s payments"
+alias ngrokcore="ngrok http --region=us --hostname=jedp.ngrok.io 8000"
+alias ngrokdb="ngrok tcp --region=us --remote-addr=5.tcp.ngrok.io:26054 5432"
+## COOL STUFF
 alias weather="curl wttr.in/Fredericton\?m"
-alias editcompose="code /Users/jedpalmater/Desktop/scripts/docker-compose.yaml"
-alias ecrlogin="aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 310087275154.dkr.ecr.us-east-1.amazonaws.com/node-12-alpine:latest"
 
+
+### POST BLOCKS
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 eval source <(/opt/homebrew/bin/starship init zsh --print-full-init)
 eval $(thefuck --alias)
-
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
+export PATH="/opt/homebrew/opt/postgresql@12/bin:$PATH"
+
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.1.3
