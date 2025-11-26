@@ -42,12 +42,17 @@ def get_user_email(repo_path: str) -> str:
 
 
 def get_commit_data(author: str, since_date: str, repo_path: str) -> list[CommitData]:
+    # Calculate the end date (end of the year specified in since_date)
+    year = int(since_date.split("-")[0])
+    until_date = f"{year + 1}-01-01"
+
     log_output = run_git_command(
         [
             "git",
             "log",
             f"--author={author}",
             f"--since={since_date}",
+            f"--until={until_date}",
             "--pretty=format:%H|%ai|%s",
             "--numstat",
         ],
